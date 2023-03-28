@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+plugins_dir="$HOME/.dotfiles/zsh-plugins"
+
+dotfile_github_repos=(
+    "https://github.com/romkatv/powerlevel10k.git"
+    "https://github.com/zsh-users/zsh-autosuggestions.git"
+    "https://github.com/zsh-users/zsh-completions.git"
+    "https://github.com/zsh-users/zsh-history-substring-search.git"
+    "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+)
+
+check_cmds_exist() {
+    local commands=("git" "grep" "sed")
+
+    #? check if git, grep, sed commands exist
+    for cmd in "${commands[@]}"; do
+        if ! command -v "$cmd" &>/dev/null; then
+            echo "Error: $cmd command is not installed"
+            echo "run: 'sudo apt install -y $cmd'"
+            exit 1
+        fi
+    done
+}
+
+#? check if plugins folder exist, and create it if it doesn't
+create_plugins_dir() {
+    if [ ! -d "$plugins_dir" ]; then
+        mkdir -p "$plugins_dir"
+    fi
+}
+
+#? clone each repository into the plugins directory
+clone_plugins_repos() {
+    for repo in "${dotfile_github_repos[@]}"; do
+        git clone -q --depth=1 "$repo" "$plugins_dir/$(get_plugin_name "$repo")"
+    done
+}
+#? get the plugin name from the git repo to make corresponding dirs
+get_plugin_name() {
+    echo "$1" | grep -oE '[^/]+\.git$' | sed 's:.git$::'
+}
+
+main() {
+    check_cmds_exist
+    create_plugins_dir
+
+    echo "Installing plugins..."
+    clone_plugins_repos
+}
+
+main
