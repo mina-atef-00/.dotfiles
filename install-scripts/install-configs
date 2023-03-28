@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+#? dir/file locations
+dotfiles_dir="$HOME/.dotfiles"
+
+#? config locations
+old_config_files=("$HOME/.gitconfig" "$HOME/.zshrc")
+config_files=("$dotfiles_dir/.gitconfig" "$dotfiles_dir/.zshrc")
+
+#? check if dotfiles exist
+check_config_files_exist() {
+    for conf in "${config_files[@]}"; do
+        if [ ! -f "$conf" ]; then
+            echo "$conf doesn't exist. Please clone the dotfiles repo"
+            exit 1
+        fi
+    done
+}
+
+remove_old_config_files() {
+    for conf in "${old_config_files[@]}"; do
+        if [[ -f "$conf" ]]; then
+            rm "$conf" &>/dev/null
+        fi
+    done
+}
+
+#? add links to the dotfile confs
+link_config_files() {
+    for conf in "${config_files[@]}"; do
+        ln -s "$conf" "$HOME/" >/dev/null
+    done
+}
+
+main() {
+    check_config_files_exist
+    remove_old_config_files
+    link_config_files
+}
+
+main
