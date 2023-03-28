@@ -1,0 +1,123 @@
+#!/usr/bin/env bash
+
+check_and_get_root_privs() {
+    if ! has_root_privs; then
+        echo "This script requires root privileges"
+        get_root_privs
+    fi
+}
+
+get_root_privs() {
+    check_sudo_exists
+    sudo -v
+
+    if ! has_root_privs; then
+        echo "Failed to obtain root privileges"
+        exit 2
+    fi
+}
+
+has_root_privs() {
+    [[ "$EUID" == 0 ]]
+}
+
+check_sudo_exists() {
+    if ! command -v "sudo" &>/dev/null; then
+        echo "sudo not found, please run this script as root, or install sudo"
+        exit 1
+    fi
+}
+
+check_apt_exists() {
+    if ! command -v "apt" &>/dev/null; then
+        echo "Error: apt is not installed"
+        exit 3
+    fi
+}
+
+update_apt_cache() {
+    trap "handle_update_err" ERR
+
+    echo "Updating apt cache..."
+    sudo apt-get update >/dev/null
+}
+handle_update_err() {
+    exit 4
+}
+
+install_packages() {
+    local packages=(
+        "sudo"
+        "zsh"
+        "neovim"
+        "exa"
+        "bat"
+        "ripgrep"
+        "fd-find"
+        "gh"
+        "virtualbox-guest-utils"
+        "nmon"
+        "sed"
+        "gawk"
+        "apt"
+        "net-tools"
+        "at"
+        "openssh-server"
+        "openssh-client"
+        "ufw"
+        "curl"
+        "htop"
+        "cron"
+        "git"
+        "rsync"
+        "tmux"
+        "sysstat"
+        "tcpdump"
+        "wget"
+        "python3"
+        "lsof"
+    )
+
+    trap "handle_install_err" ERR
+
+    echo "Installing packages..."
+    sudo apt-get install -y "${packages[@]}" >/dev/null
+}
+handle_install_err() {
+    exit 5
+}
+
+install_dust() {
+    trap "handle_install_dust_err" ERR
+
+    echo "Installing dust..."
+
+    #? extract dust pkg link and download it
+    dust_pkg_link=$(curl -sL https://api.github.com/repos/bootandy/dust/releases/latest | grep -o '"browser_download_url": "[^"]*amd64.deb"' | cut -d '"' -f4)
+    wget -qO "/tmp/dust_latest.deb" "$dust_pkg_link" >/dev/null
+
+    sudo dpkg -i "/tmp/dust_latest.deb" >/dev/null
+}
+handle_install_dust_err() {
+    exit 6
+}
+
+main() {
+    echo "Please do not exit the script because it will be updating system packages"
+
+    check_and_get_root_privs
+
+    check_apt_exists
+    update_apt_cache
+    install_packages
+
+    if ! command -v "dust" >/dev/null; then
+        install_dust
+    fi
+
+    echo "Installed system packages."
+    echo "Please restart the server."
+    exit 0
+}
+
+main
