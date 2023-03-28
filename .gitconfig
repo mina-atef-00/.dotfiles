@@ -1,0 +1,9 @@
+[user]
+	email = 52796958+mina-atef-00@users.noreply.github.com
+	name = mina-atef-00
+[init]
+	defaultBranch = main
+[credential "https://github.com"]
+	helper = !/usr/bin/gh auth git-credential
+[core]
+	editor = code --wait
