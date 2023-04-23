@@ -10,7 +10,7 @@ These dotfiles are tailored to streamline my workflow and personalize my dev env
 To install the dotfiles and run the install scripts, run: _(I encourage you to review the contents of the script before running it.)_
 
 ```sh
-curl -L "https://raw.githubusercontent.com/mina-atef-00/.dotfiles/main/install.sh" | /usr/bin/env bash
+curl -L "https://raw.githubusercontent.com/mina-atef-00/Personal-Environment-Setup-Scripts/main/install.sh" | /usr/bin/env bash
 ```
 
 ## Features
