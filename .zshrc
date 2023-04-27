@@ -23,6 +23,8 @@ alias rg="rg --color=auto"
 alias bcat="batcat --theme 'Dracula'"
 alias less="bcat"
 alias ipy="ipython3"
+alias alembic_rev="alembic revision --autogenerate"
+alias alembic_up="alembic upgrade head"
 
 #? Heroku Aliases
 # alias hstart="heroku ps:scale worker=1"
