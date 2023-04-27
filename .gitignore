@@ -1,5 +1,1 @@
-plugins/powerlevel10k/
-plugins/zsh-completions/
-plugins/zsh-history-substring-search/
-plugins/zsh-syntax-highlighting/
-plugins/zsh-autosuggestions/
+zsh-plugins/*
