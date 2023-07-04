@@ -11,8 +11,8 @@ fi
 
 #?General Aliases
 alias cp="cp -i"
-alias mv="mv -i"
-alias cpr="rsync -ahP"  # confirm before overwriting something
+alias mv="mv -i"  # confirm before overwriting something
+alias cpr="rsync -ahP" 
 alias mvr="rsync -ahP --remove-source-files"
 alias df="df -h"  # human-readable sizes
 alias free="free -m"  # show sizes in MB
@@ -20,11 +20,14 @@ alias vim="nvim"
 alias vi="nvim"
 alias ll="exa -al --color=auto --group-directories-first --header --icons"
 alias rg="rg --color=auto"
-alias bcat="batcat --theme 'Dracula'"
+alias bcat="bat --theme 'Catppuccin-mocha'"
 alias less="bcat"
 alias ipy="ipython3"
 alias alembic_rev="alembic revision --autogenerate"
 alias alembic_up="alembic upgrade head"
+alias pi="sudo pacman -S"
+alias pu="sudo pacman -Syyyu"
+alias pr="sudo pacman -Rscn"
 
 #? Heroku Aliases
 # alias hstart="heroku ps:scale worker=1"
@@ -41,14 +44,14 @@ alias alembic_up="alembic upgrade head"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/mina/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/mina/.miniconda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/mina/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/mina/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/home/mina/.miniconda/etc/profile.d/conda.sh" ]; then
+        . "/home/mina/.miniconda/etc/profile.d/conda.sh"
     else
-        export PATH="/home/mina/miniconda3/bin:$PATH"
+        export PATH="/home/mina/.miniconda/bin:$PATH"
     fi
 fi
 unset __conda_setup
