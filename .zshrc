@@ -58,3 +58,5 @@ unset __conda_setup
 
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
+
+shuf -n 1 -e "curl -s https://api.kanye.rest/ | jq -r '.quote'|cowsay " "fortune | cowsay" "fortune | ponysay" "fortune | figlet"| zsh
