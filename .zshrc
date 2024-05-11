@@ -27,6 +27,7 @@ alias alembic_rev="alembic revision --autogenerate"
 alias alembic_up="alembic upgrade head"
 alias d="docker"
 alias p="podman"
+alias e="exit"
 
 #? Heroku Aliases
 # alias hstart="heroku ps:scale worker=1"
@@ -59,4 +60,6 @@ unset __conda_setup
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
-shuf -n 1 -e "curl -s https://api.kanye.rest/ | jq -r '.quote'|cowsay " "fortune | cowsay" "fortune | ponysay" "fortune | figlet"| zsh
+#shuf -n 1 -e "curl -s https://api.kanye.rest/ | jq -r '.quote'|cowsay " "fortune | cowsay" "fortune | ponysay" "fortune | figlet"| zsh
+
+export PATH=$PATH:/home/mina/.spicetify
